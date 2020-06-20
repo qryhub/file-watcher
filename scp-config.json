@@ -1,5 +1,6 @@
 {
     "host": "hostname",
+    "port": 0,
     "username": "user",
     "password": "password",
     "local-path": ".",
