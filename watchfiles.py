@@ -2,7 +2,8 @@ import time
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 import os
-import paramiko
+from paramiko import SSHClient
+from scp import SCPClient
 import json
 
 scp = None
@@ -44,10 +45,10 @@ def on_moved(event):
 def connect_scp():
     print("connecting scp.. check your scp-config.json if this fails...")
     # read properties from scp config
-    with open('scp-config.json', 'r' as config):
+    with open('scp-config.json', 'r') as config:
         data = config.read()
         obj = json.loads(data)
-        hostname = str(obj['hostname'])
+        hostname = str(obj['host'])
         port = int(obj['port'])
         username = str(obj['username'])
         password = str(obj['password'])
@@ -78,7 +79,11 @@ if __name__ == "__main__":
     print("hey, just ignore me... I'm just waiting for file changes...")
     # start the observer
     observer.start()
-    connect_scp()
+    try:
+        connect_scp()
+    except:
+        print("failed. check your scp-config please")
+        exit()
     try:
         while True:
             time.sleep(1)
