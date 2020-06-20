@@ -1,0 +1,7 @@
+{
+    "host": "hostname",
+    "username": "user",
+    "password": "password",
+    "local-path": ".",
+    "destination-path": "./files/uploads/"
+}
